@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * This file is part of the CleverAge/EAVProcessBundle package.
  *
@@ -34,7 +35,7 @@ class EAVReaderTask extends AbstractEAVQueryTask implements IterableTaskInterfac
     /** @var LoggerInterface */
     protected $logger;
 
-    /** @var \Iterator */
+    /** @var \Iterator|\Countable */
     protected $iterator;
 
     /** @var bool */
@@ -82,20 +83,14 @@ class EAVReaderTask extends AbstractEAVQueryTask implements IterableTaskInterfac
             }
         }
 
+        $init = false;
         if (null === $this->iterator) {
-            $paginator = $this->getPaginator($state);
-            $this->iterator = $paginator->getIterator();
-
-            // Log the data count
-            if ($this->getOption($state, 'log_count')) {
-                $count = \count($paginator);
-                $logContext = $this->getLogContext($state);
-                $this->logger->info("{$count} items found with current query", $logContext);
-            }
+            $this->initIterator($state);
+            $init = true;
         }
 
         // Handle empty results
-        if (0 === $this->iterator->count()) {
+        if ($init && !$this->iterator->valid()) {
             $logContext = $this->getLogContext($state);
             $this->logger->log($options['empty_log_level'], 'Empty resultset for query', $logContext);
             $state->setSkipped(true);
@@ -183,5 +178,21 @@ class EAVReaderTask extends AbstractEAVQueryTask implements IterableTaskInterfac
         $logContext['options'] = $options;
 
         return $logContext;
+    }
+
+    /**
+     * @param ProcessState $state
+     */
+    protected function initIterator(ProcessState $state): void
+    {
+        $paginator = $this->getPaginator($state);
+        $this->iterator = $paginator->getIterator();
+
+        // Log the data count
+        if ($this->getOption($state, 'log_count')) {
+            $count = $paginator->count();
+            $logContext = $this->getLogContext($state);
+            $this->logger->info("{$count} items found with current query", $logContext);
+        }
     }
 }
