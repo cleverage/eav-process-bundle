@@ -77,10 +77,10 @@ abstract class AbstractEAVQueryTask extends AbstractEAVTask
 
         $resolver->setAllowedTypes('criteria', ['array']);
         $resolver->setAllowedTypes('extended_criteria', ['array']);
-        $resolver->setAllowedTypes('repository', ['NULL', DataRepository::class]);
+        $resolver->setAllowedTypes('repository', ['null', DataRepository::class]);
         $resolver->setAllowedTypes('order_by', ['array']);
-        $resolver->setAllowedTypes('limit', ['NULL', 'integer']);
-        $resolver->setAllowedTypes('offset', ['NULL', 'integer']);
+        $resolver->setAllowedTypes('limit', ['null', 'integer']);
+        $resolver->setAllowedTypes('offset', ['null', 'integer']);
     }
 
     /**

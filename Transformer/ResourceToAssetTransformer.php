@@ -78,7 +78,7 @@ class ResourceToAssetTransformer extends UniqueEAVFinderTransformer
                 'create_missing' => true,
             ]
         );
-        $resolver->setAllowedTypes('attribute', ['NULL', 'string', AttributeInterface::class]);
+        $resolver->setAllowedTypes('attribute', ['null', 'string', AttributeInterface::class]);
         $resolver->setAllowedTypes('create_missing', ['bool']);
         $resolver->setNormalizer(
             'attribute',

@@ -81,7 +81,7 @@ class SingleEAVFinderTransformer implements ConfigurableTransformerInterface
                 'ignore_missing' => true,
             ]
         );
-        $resolver->setAllowedTypes('repository', ['NULL', DataRepository::class]);
+        $resolver->setAllowedTypes('repository', ['null', DataRepository::class]);
         $resolver->setAllowedTypes('ignore_missing', ['bool']);
 
 

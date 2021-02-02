@@ -96,7 +96,7 @@ class EAVReadFromIdTask extends AbstractEAVTask
                 'load_depth' => 1,
             ]
         );
-        $resolver->setAllowedTypes('context', ['NULL', 'array']);
+        $resolver->setAllowedTypes('context', ['null', 'array']);
         $resolver->setAllowedTypes('load_depth', ['integer']);
     }
 }
